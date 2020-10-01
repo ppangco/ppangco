@@ -1,18 +1,24 @@
 <template>
   <div>
-    <div class="carousel">
+    <div class="carousel" :style="browserSize">
       <v-carousel
         show-arrows-on-hover
         hide-delimiters
-        :height="null"
+        height="100%"
         :continuous="false"
         v-model="page"
       >
         <v-carousel-item v-for="p of pages" :key="p[0]">
-          <v-row no-gutters>
-            <v-col cols="6"><img :src="p[1]" class="page"></v-col>
-            <v-col cols="6"><img :src="p[0]" class="page"></v-col>
-          </v-row>
+          <v-container fill-height class="pa-0">
+            <v-row no-gutters class="fill-height">
+              <v-col cols="6" class="fill-height text-right">
+                <img :src="p[1]" class="page" />
+              </v-col>
+              <v-col cols="6" class="fill-height">
+                <img :src="p[0]" class="page" />
+              </v-col>
+            </v-row>
+          </v-container>
         </v-carousel-item>
       </v-carousel>
       <v-slider
@@ -23,6 +29,7 @@
         min="0"
         :max="maxPage"
         v-model="page"
+        class="px-5"
       >
         <template v-slot:prepend>
           <p class="body-1 text-no-wrap ma-0">Page {{ pageCount }}</p>
@@ -53,6 +60,7 @@ export default {
     },
   },
   data: () => ({
+    browserSize: { height: `${window.innerHeight}px`},
     page: 0,
     maxPage: null,
     pages: [],
@@ -70,6 +78,10 @@ export default {
     },
   },
   methods: {
+    updateBrowserSize(e) {
+      this.browserSize.height = `${window.innerHeight}px`
+      console.log(this.browserSize);
+    },
     keyboardNav(e) {
       if (e.key === 'ArrowLeft') {
         this.page--
@@ -98,9 +110,11 @@ export default {
     this.mobilePages = mobilePages
     this.maxPage = Math.ceil(this.pageCount / 2) - 1
     this.page = this.maxPage
+    window.addEventListener('resize', this.updateBrowserSize)
     window.addEventListener('keydown', this.keyboardNav)
   },
   beforeDestroy() {
+    window.removeEventListener('resize', this.updateBrowserSize)
     window.removeEventListener('keydown', this.keyboardNav)
   },
 }
@@ -108,7 +122,9 @@ export default {
 
 <style scoped>
 .page {
-  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  align-self: start;
 }
 .single-page {
   display: none;
