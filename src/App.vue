@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <router-link to="/seraph-of-the-end-chapter-95">Hi</router-link>
     <v-main>
       <router-view/>
     </v-main>
@@ -8,17 +7,16 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+//import HelloWorld from './components/HelloWorld';
 
 export default {
   name: 'App',
 
-  components: {
+  /*components: {
     HelloWorld,
   },
 
   data: () => ({
-    //
-  }),
+  }),*/
 };
 </script>

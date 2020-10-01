@@ -1,18 +1,23 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+  <v-container class="home">
+    <img alt="Ppang Co. logo" src="../assets/logo.png" />
+    <h2>View our <router-link to="/seraph-of-the-end-chapter-95">Chapter 95</router-link></h2>
+  </v-container>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
 
 export default {
-  name: "Home",
-  components: {
-    HelloWorld
-  }
+  name: "Home"
 };
 </script>
+
+<style scoped>
+.home {
+  text-align: center;
+}
+img {
+  max-width: 100%;
+  max-height: 50vh;
+}
+</style>

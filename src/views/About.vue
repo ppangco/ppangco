@@ -1,5 +1,8 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <v-container class="about">
+    <img src="@/assets/logo.png">
+    <h1>Ppang Co.</h1>
+    <p>We are "Ppang Co."</p>
+    <p>Two pensivebread friends.</p>
+  </v-container>
 </template>

@@ -1,33 +1,41 @@
 <template>
   <div>
-    <v-carousel
-      show-arrows-on-hover
-      hide-delimiters
-      :height="pageHeight"
-      :continuous="false"
-      v-model="page"
-    >
-      <v-carousel-item v-for="p of pages" :key="p">
-        <img :src="p" class="page">
-      </v-carousel-item>
-    </v-carousel>
-    <v-slider
-      dense
-      hide-details
-      track-color="#cccccc"
-      color="#2566de"
-      min="0"
-      :max="pageCount"
-      v-model="page"
-    >
-      <template v-slot:prepend>
-        <p class="body-1 text-no-wrap ma-0">Page {{ pages.length }}</p>
-      </template>
-      <template v-slot:append>
-        <p class="body-1 text-no-wrap ma-0">Page 1</p>
-      </template>
-    </v-slider>
-    <p class="text-center">{{ pageLabel }}</p>
+    <div class="carousel">
+      <v-carousel
+        show-arrows-on-hover
+        hide-delimiters
+        :height="null"
+        :continuous="false"
+        v-model="page"
+      >
+        <v-carousel-item v-for="p of pages" :key="p[0]">
+          <v-row no-gutters>
+            <v-col cols="6"><img :src="p[1]" class="page"></v-col>
+            <v-col cols="6"><img :src="p[0]" class="page"></v-col>
+          </v-row>
+        </v-carousel-item>
+      </v-carousel>
+      <v-slider
+        dense
+        hide-details
+        track-color="#cccccc"
+        color="#2566de"
+        min="0"
+        :max="maxPage"
+        v-model="page"
+      >
+        <template v-slot:prepend>
+          <p class="body-1 text-no-wrap ma-0">Page {{ pageCount }}</p>
+        </template>
+        <template v-slot:append>
+          <p class="body-1 text-no-wrap ma-0">Page 1</p>
+        </template>
+      </v-slider>
+      <p class="text-center">{{ pageLabel }}</p>
+    </div>
+    <div class="single-page">
+      <v-img v-for="p of mobilePages" :key="p" :src="p" />
+    </div>
   </div>
 </template>
 
@@ -37,38 +45,81 @@ export default {
   props: {
     pageCount: {
       type: Number,
-      default: 1
+      default: 1,
     },
     folder: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   data: () => ({
-    pageHeight: window.innerHeight - 54,
     page: 0,
-    pages: []
+    maxPage: null,
+    pages: [],
+    mobilePages: []
   }),
   computed: {
     pageLabel() {
-      if (this.page === this.pageCount) {
+      if (this.page === this.maxPage) {
         return 'Page: 1'
       } else {
-        return `Pages: ${this.pageCount - this.page + 1} - ${this.pageCount - this.page + 2}`;
+        return `Pages: ${(this.maxPage - this.page) * 2} - ${
+          (this.maxPage - this.page) * 2 + 1
+        }`
+      }
+    },
+  },
+  methods: {
+    keyboardNav(e) {
+      if (e.key === 'ArrowLeft') {
+        this.page--
+      } else if (e.key === 'ArrowRight') {
+        this.page++
       }
     },
   },
   created() {
-    for (let i = this.pageCount; i >= 0; i--) {
-      this.pages.push(require(`../assets/${this.folder}/${i}.png`));
+    let pages = [
+      [
+        require(`../assets/blank.png`),
+        require(`../assets/${this.folder}/1.png`),
+      ],
+    ]
+    let mobilePages = [require(`../assets/${this.folder}/1.png`)]
+    for (let i = 2; i < this.pageCount; i += 2) {
+      pages.push([
+        require(`../assets/${this.folder}/${i}.png`),
+        require(`../assets/${this.folder}/${i + 1}.png`),
+      ])
+      mobilePages.push(require(`../assets/${this.folder}/${i}.png`))
+      mobilePages.push(require(`../assets/${this.folder}/${i + 1}.png`))
     }
-    this.page = this.pageCount;
-  }
+    this.pages = pages.reverse()
+    this.mobilePages = mobilePages
+    this.maxPage = Math.ceil(this.pageCount / 2) - 1
+    this.page = this.maxPage
+    window.addEventListener('keydown', this.keyboardNav)
+  },
+  beforeDestroy() {
+    window.removeEventListener('keydown', this.keyboardNav)
+  },
 }
 </script>
 
-<style>
+<style scoped>
 .page {
-  height: 100%;
+  width: 100%;
+}
+.single-page {
+  display: none;
+}
+
+@media (max-width: 800px) {
+  .carousel {
+    display: none;
+  }
+  .single-page {
+    display: block;
+  }
 }
 </style>
