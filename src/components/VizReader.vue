@@ -43,7 +43,7 @@
       <p class="text-center">{{ pageLabel }}</p>
     </div>
     <div class="single-page">
-      <v-img v-for="p of mobilePages" :key="p" :src="p" />
+      <v-img v-for="p of mobilePages" :key="p" :src="p" class="my-4" />
     </div>
   </div>
 </template>
