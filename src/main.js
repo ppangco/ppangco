@@ -7,6 +7,9 @@ import VueMeta from 'vue-meta';
 
 Vue.config.productionTip = false;
 Vue.use(VueMeta);
+if (window.firebase) {
+  window.firestore = firebase.firestore();
+}
 
 new Vue({
   router,

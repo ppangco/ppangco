@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="carousel" :style="browserSize">
+    <div class="carousel">
+      <div :style="browserSize">
       <v-carousel
         show-arrows-on-hover
         hide-delimiters
@@ -21,6 +22,7 @@
           </v-container>
         </v-carousel-item>
       </v-carousel>
+      </div>
       <v-slider
         dense
         hide-details
@@ -80,7 +82,6 @@ export default {
   methods: {
     updateBrowserSize(e) {
       this.browserSize.height = `${window.innerHeight}px`
-      console.log(this.browserSize);
     },
     keyboardNav(e) {
       if (e.key === 'ArrowLeft') {

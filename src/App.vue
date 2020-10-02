@@ -23,7 +23,10 @@
 <script>
 export default {
   name: 'App',
-
+  metaInfo: {
+    title: 'Ppang Co.',
+    titleTemplate: '%s | Ppang Co.'
+  },
   data: () => ({
     links: [
       ['Shounen Joke', '/seraph-of-the-end-chapter-95'],

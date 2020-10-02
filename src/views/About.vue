@@ -16,3 +16,12 @@
     </v-row>
   </v-container>
 </template>
+
+<script>
+export default {
+  name: 'about',
+  metaInfo: {
+    title: 'About Us',
+  }
+}
+</script>
