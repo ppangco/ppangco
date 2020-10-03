@@ -1,6 +1,6 @@
 <template>
   <div>
-    <viz-reader :page-count="8" folder="chapter-95" />
+    <viz-reader :page-count="15" folder="chapter-95" />
     <comment-section />
   </div>
 </template>

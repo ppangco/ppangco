@@ -9,7 +9,7 @@
         :continuous="false"
         v-model="page"
       >
-        <v-carousel-item v-for="p of pages" :key="p[0]">
+        <v-carousel-item v-for="p of pages" :key="p[0]" eager>
           <v-container fill-height class="pa-0">
             <v-row no-gutters class="fill-height">
               <v-col cols="6" class="fill-height text-right">
